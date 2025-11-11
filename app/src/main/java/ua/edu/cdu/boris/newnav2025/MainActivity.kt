@@ -4,14 +4,11 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.Home
-import androidx.compose.material3.Button
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
@@ -19,13 +16,13 @@ import androidx.compose.material3.adaptive.navigationsuite.NavigationSuiteScaffo
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.tooling.preview.PreviewScreenSizes
-import androidx.compose.ui.unit.dp
+import ua.edu.cdu.boris.newnav2025.ui.screens.FavoritesScreen
+import ua.edu.cdu.boris.newnav2025.ui.screens.HomeScreen
 import ua.edu.cdu.boris.newnav2025.ui.theme.NewNav2025Theme
 
 class MainActivity : ComponentActivity() {
@@ -63,36 +60,19 @@ fun NewNav2025App() {
         }
     ) {
         Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
+
             when (currentDestination) {
                 AppDestinations.HOME -> HomeScreen(modifier = Modifier.padding(innerPadding))
+
                 AppDestinations.FAVORITES -> FavoritesScreen(
-                    modifier = Modifier.padding(
-                        innerPadding
-                    )
+                    modifier = Modifier.padding(innerPadding),
+                    onDestinationChange = { newDestination -> currentDestination = newDestination }
                 )
+
 //                AppDestinations.PROFILE -> TODO()
             }
         }
     }
-}
-
-@Composable
-fun FavoritesScreen(modifier: Modifier) {
-    Column(modifier = modifier) {
-        var str by remember {  mutableStateOf("It is Favorites Screen")}
-        Text(text = str)
-        Button(
-            modifier = Modifier
-                .padding(top = 20.dp)
-                .fillMaxWidth(),
-            onClick = {
-                str = "123456"}) { Text("BTN 1") }
-    }
-}
-
-@Composable
-fun HomeScreen(modifier: Modifier) {
-    Text(modifier = modifier, text = "It is Home Screen")
 }
 
 enum class AppDestinations(
