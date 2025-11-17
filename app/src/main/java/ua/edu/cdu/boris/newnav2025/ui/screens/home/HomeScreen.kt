@@ -1,4 +1,4 @@
-package ua.edu.cdu.boris.newnav2025.ui.screens
+package ua.edu.cdu.boris.newnav2025.ui.screens.home
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
