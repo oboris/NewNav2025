@@ -17,7 +17,7 @@ import ua.edu.cdu.boris.newnav2025.repository.AppRepositoryImpl
 class AppViewModel(private val repo : AppRepository = AppRepositoryImpl()) : ViewModel() {
 
     private val _author: MutableLiveData<Author> =
-        MutableLiveData(Author("Author Author", "0/0/0"))
+        MutableLiveData(Author(name = "Author Author", birthday = "0/0/0"))
     val author: LiveData<Author> = _author
 
     fun updateAuthor() {

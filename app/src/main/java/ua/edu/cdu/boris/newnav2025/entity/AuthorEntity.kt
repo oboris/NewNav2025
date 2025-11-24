@@ -12,8 +12,10 @@ data class AuthorEntity(
         autoGenerate = true
     )
     @ColumnInfo(name = "author_id")
-    val id: Int,
+    val id: Int = 0,
+
     @ColumnInfo(name = "author_name")
     var name: String,
+
     val birthday: String
 )

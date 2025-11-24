@@ -2,28 +2,33 @@ package ua.edu.cdu.boris.newnav2025.utils
 
 import ua.edu.cdu.boris.newnav2025.entity.AuthorEntity
 import ua.edu.cdu.boris.newnav2025.entity.BookEntity
+import ua.edu.cdu.boris.newnav2025.entity.BookWithAuthor
 import ua.edu.cdu.boris.newnav2025.model.Author
 import ua.edu.cdu.boris.newnav2025.model.Book
 
 
-fun Author.asAuthorEntity() = AuthorEntity(
-    name = name,
-    birthday = birthday
+fun Author.toEntity() = AuthorEntity(
+    id = this.id,
+    name = this.name,
+    birthday = this.birthday
 )
 
-fun AuthorEntity.asAuthor() = Author(
-    name = name,
-    birthday = birthday
+fun AuthorEntity.toDomain() = Author(
+    id = this.id,
+    name = this.name,
+    birthday = this.birthday
 )
 
-fun Book.asBookEntity() = BookEntity(
-    title = title,
-    pages = pages,
-    author = author
+fun Book.toEntity() = BookEntity(
+    id = this.id,
+    title = this.title,
+    pages = this.pages,
+    authorId = this.author.id
 )
 
-fun BookEntity.asBook() = Book(
-    title = title,
-    pages = pages,
-    author = author
+fun BookWithAuthor.toDomain() = Book(
+    id = this.book.id,
+    title = this.book.title,
+    pages = this.book.pages,
+    author = this.author.toDomain()
 )

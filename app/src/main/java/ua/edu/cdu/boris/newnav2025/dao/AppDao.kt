@@ -6,9 +6,12 @@ import androidx.room.Insert
 import androidx.room.Query
 import ua.edu.cdu.boris.newnav2025.entity.AuthorEntity
 import ua.edu.cdu.boris.newnav2025.entity.BookEntity
+import ua.edu.cdu.boris.newnav2025.entity.BookWithAuthor
 
 @Dao
 interface AppDao {
+
+//Authors DAO
     @Query("SELECT * FROM authors")
     fun getAllAuthors(): List<AuthorEntity>
 
@@ -27,8 +30,9 @@ interface AppDao {
     @Query("DELETE FROM authors")
     fun deleteAllAuthors()
 
+//Books DAO
     @Query("SELECT * FROM books")
-    fun getAllBooks(): List<BookEntity>
+    fun getAllBooks(): List<BookWithAuthor>
 
     @Insert
     fun insertAllBooks(vararg books: BookEntity)
@@ -40,5 +44,5 @@ interface AppDao {
     fun deleteBook(book: BookEntity)
 
     @Query("DELETE FROM books")
-    fun delAllBooks()
+    fun deleteAllBooks()
 }

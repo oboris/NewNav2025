@@ -26,7 +26,7 @@ abstract class AppDatabase : RoomDatabase() {
                 val instance = Room.databaseBuilder(
                     context.applicationContext,
                     AppDatabase::class.java,
-                    "app_database" // The name of your database file
+                    "app_database.db3" // The name of your database file
                 )
                     // .addMigrations(MIGRATION_1_2) // For production, implement proper migrations
                     .build()

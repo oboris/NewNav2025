@@ -80,7 +80,7 @@ fun MyMegaBookItem(book: Book) {
 
         Text(
             modifier = mod,
-            text = book.author
+            text = book.author.name
         )
     }
 }

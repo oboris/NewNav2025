@@ -22,10 +22,13 @@ data class BookEntity(
         autoGenerate = true
     )
     @ColumnInfo(name = "book_id")
-    val id: Int,
+    val id: Int = 0,
+
     @ColumnInfo(name = "book_title")
     val title: String,
+
     val pages: Int,
+
     @ColumnInfo(name = "author_id")
     val authorId: Int
 )
