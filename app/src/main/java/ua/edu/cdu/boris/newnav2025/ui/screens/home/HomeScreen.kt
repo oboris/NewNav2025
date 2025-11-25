@@ -18,7 +18,6 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
@@ -49,14 +48,19 @@ fun HomeScreen(
         Text(text = "It is Home Screen")
 
         LazyColumn(
-            modifier = Modifier.fillMaxWidth().weight(1.0f),
+            modifier = Modifier
+                .fillMaxWidth()
+                .weight(1.0f),
             verticalArrangement = Arrangement.spacedBy(10.dp),
             contentPadding = PaddingValues(horizontal = 8.dp)
         ) {
-            items(items = myMegaList) { listItem ->
+            items(items = myMegaList, key = {it.id}) { listItem ->
                 when (listItem) {
-                    is Author -> MyMegaAuthorItem(listItem)
-                    is Book -> MyMegaBookItem(listItem)
+                    is Author -> MyMegaAuthorItem(
+                        author = listItem,
+                        onDelAuthor = { viewModel1.deleteAuthorFromDb(listItem) }
+                    )
+                    is Book -> MyMegaBookItem(listItem, viewModel1)
                     is AuthorList -> MyMegaAuthorListItem(listItem)
                 }
             }
@@ -85,11 +89,12 @@ fun HomeScreen(
 
 
 @Composable
-fun MyMegaBookItem(book: Book) {
+fun MyMegaBookItem(book: Book, viewModel1: AppViewModel) {
     Row(
         Modifier.fillMaxWidth()
     ) {
-        val mod = Modifier.weight(2f)
+        val mod = Modifier
+            .weight(2f)
             .background(Color.Gray)
         Text(
             modifier = mod
@@ -108,16 +113,30 @@ fun MyMegaBookItem(book: Book) {
             text = book.author.name
         )
 
-        Button(
-            onClick = {
+        Column {
+            Button(
+                onClick = {
+                    viewModel1.deleteBookFromDb(book)
+                })
+            { Text("Del") }
 
-            })
-        { Text("Del") }
+            Button(
+                onClick = {
+                    viewModel1.changePagesOfBook(book, 1)
+                })
+            { Text("+1") }
+
+            Button(
+                onClick = {
+                    viewModel1.changePagesOfBook(book, -1)
+                })
+            { Text("-1") }
+        }
     }
 }
 
 @Composable
-fun MyMegaAuthorItem(author: Author) {
+fun MyMegaAuthorItem(author: Author, onDelAuthor: () -> Unit) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
@@ -139,9 +158,8 @@ fun MyMegaAuthorItem(author: Author) {
         )
 
         Button(
-            onClick = {
-
-            })
+            onClick = onDelAuthor
+        )
         { Text("Del") }
     }
 }

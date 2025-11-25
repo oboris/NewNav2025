@@ -77,9 +77,6 @@ class AppViewModel(application: Application) : AndroidViewModel(application) {
         )
     )
 
-
-
-
     fun loadAllDataToDb() {
         viewModelScope.launch {
             repo.insertAuthors(myMegaAuthorList)
@@ -132,6 +129,28 @@ class AppViewModel(application: Application) : AndroidViewModel(application) {
         viewModelScope.launch {
             repo.clearBooks()
             repo.clearAuthors()
+            getAllData()
+        }
+    }
+
+    fun deleteBookFromDb(book: Book){
+        viewModelScope.launch {
+            repo.deleteBook(book)
+            getAllData()
+        }
+    }
+
+    fun deleteAuthorFromDb(author: Author){
+        viewModelScope.launch {
+            repo.deleteAuthor(author)
+            getAllData()
+        }
+    }
+
+    fun changePagesOfBook(book: Book, delta: Int){
+        val book1 = book.copy(pages = book.pages + delta)
+        viewModelScope.launch {
+            repo.updateBook(book1)
             getAllData()
         }
     }

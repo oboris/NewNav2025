@@ -20,4 +20,10 @@ interface AppRepository {
     suspend fun clearBooks()
 
     suspend fun clearAuthors()
+
+    suspend fun deleteBook(book: Book)
+
+    suspend fun deleteAuthor(author: Author)
+
+    suspend fun updateBook(book: Book)
 }

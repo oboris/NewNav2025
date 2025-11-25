@@ -6,6 +6,7 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Transaction
+import androidx.room.Update
 import ua.edu.cdu.boris.newnav2025.entity.AuthorEntity
 import ua.edu.cdu.boris.newnav2025.entity.BookEntity
 import ua.edu.cdu.boris.newnav2025.entity.BookWithAuthor
@@ -55,4 +56,8 @@ interface AppDao {
 
     @Query("DELETE FROM books")
     suspend fun deleteAllBooks()
+
+    @Transaction
+    @Update
+    suspend fun updateBook(book: BookEntity)
 }

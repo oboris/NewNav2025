@@ -120,4 +120,16 @@ class AppRepositoryImpl(private val appDao: AppDao) : AppRepository {
     override suspend fun clearAuthors() {
         appDao.deleteAllAuthors()
     }
+
+    override suspend fun deleteBook(book: Book) {
+        appDao.deleteBook(book.toEntity())
+    }
+
+    override suspend fun deleteAuthor(author: Author) {
+        appDao.deleteAuthor(author.toEntity())
+    }
+
+    override suspend fun updateBook(book: Book) {
+        appDao.updateBook(book.toEntity())
+    }
 }
