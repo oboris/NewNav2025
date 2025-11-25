@@ -1,20 +1,23 @@
 package ua.edu.cdu.boris.newnav2025
 
+import android.app.Application
 import androidx.compose.runtime.mutableStateOf
+import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.launch
 import ua.edu.cdu.boris.newnav2025.model.Author
+import ua.edu.cdu.boris.newnav2025.model.Book
 import ua.edu.cdu.boris.newnav2025.model.IListable
 import ua.edu.cdu.boris.newnav2025.repository.AppRepository
-import ua.edu.cdu.boris.newnav2025.repository.AppRepositoryImpl
 
 
-class AppViewModel(private val repo : AppRepository = AppRepositoryImpl()) : ViewModel() {
+class AppViewModel(application: Application) : AndroidViewModel(application) {
+
+    private val repo : AppRepository = (application as MyApp).appRepository
 
     private val _author: MutableLiveData<Author> =
         MutableLiveData(Author(name = "Author Author", birthday = "0/0/0"))
@@ -55,5 +58,80 @@ class AppViewModel(private val repo : AppRepository = AppRepositoryImpl()) : Vie
 
     fun getAllData() {
         _myMegaList.postValue(repo.getAllData())
+    }
+
+    var myMegaAuthorList = listOf(
+        Author(
+            name = "Author 1",
+            birthday = "01/01/2000"
+        ),
+
+        Author(
+            name = "Author 2",
+            birthday = "01/01/2010"
+        ),
+
+        Author(
+            name = "Author 3",
+            birthday = "02/02/2020"
+        )
+    )
+
+
+
+
+    fun loadAllDataToDb() {
+        viewModelScope.launch {
+            repo.insertAuthors(myMegaAuthorList)
+            myMegaAuthorList = repo.getAllAuthors()
+
+            var myMegaBookList = listOf(
+                Book(
+                    title = "Book 1",
+                    pages = 100,
+                    author = myMegaAuthorList[0]
+                ),
+                Book(
+                    title = "Book 2",
+                    pages = 110,
+                    author = myMegaAuthorList[0]
+                ),
+                Book(
+                    title = "Book 3",
+                    pages = 10,
+                    author = myMegaAuthorList[1]
+                ),
+                Book(
+                    title = "Book 4",
+                    pages = 300,
+                    author = myMegaAuthorList[0]
+                ),
+                Book(
+                    title = "Book 5",
+                    pages = 50,
+                    author = myMegaAuthorList[1]
+                ),
+                Book(
+                    title = "Book 6",
+                    pages = 100,
+                    author = myMegaAuthorList[2]
+                ),
+                Book(
+                    title = "Book 7",
+                    pages = 100,
+                    author = myMegaAuthorList[0]
+                )
+            )
+            repo.insertBooks(myMegaBookList)
+        }
+        getAllData()
+    }
+
+    fun clearAllDataFromDb() {
+        viewModelScope.launch {
+            repo.clearBooks()
+            repo.clearAuthors()
+        }
+        getAllData()
     }
 }

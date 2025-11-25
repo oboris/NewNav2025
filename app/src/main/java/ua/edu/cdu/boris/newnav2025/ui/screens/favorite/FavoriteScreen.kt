@@ -98,7 +98,7 @@ fun FavoriteMainScreen(
 
     Column(modifier = modifier) {
         var str by rememberSaveable { mutableStateOf("It is Favorites Screen") }
-        val author1 by viewModel.author.observeAsState(Author("", ""))
+        val author1 by viewModel.author.observeAsState(Author( name = "", birthday = ""))
 
         Text(
             modifier = Modifier

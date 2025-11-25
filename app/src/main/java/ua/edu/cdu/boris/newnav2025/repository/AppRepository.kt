@@ -7,7 +7,15 @@ import ua.edu.cdu.boris.newnav2025.model.IListable
 interface AppRepository {
     fun getAllData(): List<IListable>
 
-    fun insertAuthors(authors: List<Author>)
+    suspend fun getAllAuthors(): List<Author>
 
-    fun insertBooks(books: List<Book>)
+    suspend fun getAllBooksWithAuthors(): List<Book>
+
+    suspend fun insertAuthors(authors: List<Author>)
+
+    suspend fun insertBooks(books: List<Book>)
+
+    suspend fun clearBooks()
+
+    suspend fun clearAuthors()
 }

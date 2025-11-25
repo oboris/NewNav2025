@@ -6,7 +6,6 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -15,6 +14,7 @@ import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
+import androidx.compose.material3.Button
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.SideEffect
@@ -44,7 +44,7 @@ fun HomeScreen(
         Text(text = "It is Home Screen")
 
         LazyColumn(
-            modifier = Modifier.fillMaxSize(),
+            modifier = Modifier.fillMaxWidth().weight(1.0f),
             verticalArrangement = Arrangement.spacedBy(10.dp),
             contentPadding = PaddingValues(horizontal = 8.dp)
         ) {
@@ -56,8 +56,28 @@ fun HomeScreen(
                 }
             }
         }
+
+        Button(
+            modifier = Modifier
+                .padding(top = 20.dp)
+                .fillMaxWidth(),
+            onClick = {
+                viewModel1.loadAllDataToDb()
+            }
+        )
+        { Text("Load Data to Data Base") }
+
+        Button(
+            modifier = Modifier
+                .padding(20.dp)
+                .fillMaxWidth(),
+            onClick = {
+                viewModel1.clearAllDataFromDb()
+            })
+        { Text("Clear Data Base") }
     }
 }
+
 
 @Composable
 fun MyMegaBookItem(book: Book) {
