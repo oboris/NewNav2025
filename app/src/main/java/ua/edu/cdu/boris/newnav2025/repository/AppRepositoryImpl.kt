@@ -74,11 +74,17 @@ class AppRepositoryImpl(private val appDao: AppDao) : AppRepository {
         return myMegaBookList
     }
 
-    override fun getAllData(): List<IListable> {
+    override suspend fun getAllData(): List<IListable> {
 
-        val myMegaAuthorList = loadAuthors()
+//        val myMegaAuthorList = loadAuthors()
+//
+//        var myMegaList: List<IListable> = loadBooks()
 
-        var myMegaList: List<IListable> = loadBooks()
+        var myMegaList: List<IListable> = getAllBooksWithAuthors()
+
+//        var myMegaList: List<IListable> = getAllBooksWithAuthorsV2()
+
+        val myMegaAuthorList = getAllAuthors()
 
         myMegaList = myMegaList.plus(AuthorList(myMegaAuthorList))
 
@@ -93,6 +99,10 @@ class AppRepositoryImpl(private val appDao: AppDao) : AppRepository {
 
     override suspend fun getAllBooksWithAuthors(): List<Book> {
         return appDao.getAllBooks().map { it.toDomain() }
+    }
+
+    override suspend fun getAllBooksWithAuthorsV2(): List<Book> {
+        return appDao.getAllBooksV2().map { it.toDomain() }
     }
 
     override suspend fun insertAuthors(authors: List<Author>) {

@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "d0089a32404ac620663b90e61b100622",
+    "identityHash": "ba6cd91c5f6b8538fafc9eff5714981d",
     "entities": [
       {
         "tableName": "authors",
@@ -69,6 +69,17 @@
             "book_id"
           ]
         },
+        "indices": [
+          {
+            "name": "index_books_author_id",
+            "unique": false,
+            "columnNames": [
+              "author_id"
+            ],
+            "orders": [],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_books_author_id` ON `${TABLE_NAME}` (`author_id`)"
+          }
+        ],
         "foreignKeys": [
           {
             "table": "authors",
@@ -86,7 +97,7 @@
     ],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'd0089a32404ac620663b90e61b100622')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'ba6cd91c5f6b8538fafc9eff5714981d')"
     ]
   }
 }

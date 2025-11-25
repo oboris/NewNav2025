@@ -56,7 +56,7 @@ class AppViewModel(application: Application) : AndroidViewModel(application) {
         MutableLiveData<List<IListable>>(emptyList())
     val myMegaList: LiveData<List<IListable>> = _myMegaList
 
-    fun getAllData() {
+    suspend fun getAllData() {
         _myMegaList.postValue(repo.getAllData())
     }
 
@@ -123,15 +123,16 @@ class AppViewModel(application: Application) : AndroidViewModel(application) {
                 )
             )
             repo.insertBooks(myMegaBookList)
+
+            getAllData()
         }
-        getAllData()
     }
 
     fun clearAllDataFromDb() {
         viewModelScope.launch {
             repo.clearBooks()
             repo.clearAuthors()
+            getAllData()
         }
-        getAllData()
     }
 }

@@ -29,6 +29,6 @@ data class BookEntity(
 
     val pages: Int,
 
-    @ColumnInfo(name = "author_id")
+    @ColumnInfo(name = "author_id", index = true)
     val authorId: Int
 )

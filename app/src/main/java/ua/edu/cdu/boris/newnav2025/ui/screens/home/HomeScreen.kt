@@ -17,6 +17,7 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.Button
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
@@ -37,10 +38,14 @@ fun HomeScreen(
     viewModel1: AppViewModel = viewModel()
 ) {
     val myMegaList by viewModel1.myMegaList.observeAsState(emptyList())
-    SideEffect {
-        viewModel1.getAllData()
-    }
+//    SideEffect {
+//        viewModel1.getAllData()
+//    }
     Column(modifier = modifier) {
+        LaunchedEffect(Unit) {
+            viewModel1.getAllData()
+        }
+
         Text(text = "It is Home Screen")
 
         LazyColumn(
@@ -102,6 +107,12 @@ fun MyMegaBookItem(book: Book) {
             modifier = mod,
             text = book.author.name
         )
+
+        Button(
+            onClick = {
+
+            })
+        { Text("Del") }
     }
 }
 
@@ -126,6 +137,12 @@ fun MyMegaAuthorItem(author: Author) {
                 .background(Color.Gray),
             text = author.birthday
         )
+
+        Button(
+            onClick = {
+
+            })
+        { Text("Del") }
     }
 }
 
